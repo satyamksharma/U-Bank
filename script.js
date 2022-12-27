@@ -18,14 +18,14 @@ const account2 = {
 };
 
 const account3 = {
-    owner: 'Shubham Kumar',
+    owner: 'Shubham Sharma',
     movements: [200, -200, 340, -300, -20, 50, 400, -460],
     interestRate: 0.7,
     pin: 3333,
 };
 
 const account4 = {
-    owner: 'Saransh Kumar',
+    owner: 'Saransh Raj',
     movements: [430, 1000, 700, 50, 90],
     interestRate: 1,
     pin: 4444,
@@ -79,16 +79,16 @@ const calcDisplayBalance = function (movements) {
     labelBalance.textContent = `₹ ${balance}`;
 };
 
-const calcDisplaySummary = function (movements) {
-    const incomes = movements.filter((mov) => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const calcDisplaySummary = function (acc) {
+    const incomes = acc.movements.filter((mov) => mov > 0).reduce((acc, mov) => acc + mov, 0);
     labelSumIn.textContent = `₹ ${incomes}`;
 
-    const outcomes = movements.filter((mov) => mov < 0).reduce((acc, mov) => acc + mov, 0);
+    const outcomes = acc.movements.filter((mov) => mov < 0).reduce((acc, mov) => acc + mov, 0);
     labelSumOut.textContent = `₹ ${Math.abs(outcomes)}`;
 
-    const interest = movements
+    const interest = acc.movements
         .filter((mov) => mov > 0)
-        .map((deposit) => (deposit * 1.2) / 100)
+        .map((deposit) => (deposit * acc.interestRate) / 100)
         .filter((int, i, arr) => {
             return int >= 1;
         })
@@ -119,13 +119,16 @@ btnLogin.addEventListener('click', function (e) {
         // Display UI and Welcome message
         labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
         containerApp.style.opacity = 100;
+        // clear the input fields
+        inputLoginUsername.value = inputLoginPin.value = '';
+        inputLoginPin.blur();
         // Display movements
-        displayMovements(account1.movements);
+        displayMovements(currentAccount.movements);
 
         //Display balance
-        calcDisplayBalance(account1.movements);
+        calcDisplayBalance(currentAccount.movements);
 
         // Display summary
-        calcDisplaySummary(account1.movements);
+        calcDisplaySummary(currentAccount);
     }
 });
