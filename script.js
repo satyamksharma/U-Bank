@@ -160,6 +160,9 @@ btnLogin.addEventListener('click', function (e) {
 
         // Update UI
         updateUI(currentAccount);
+
+        // Highlighting the alternate rows
+        highlight();
     }
 });
 
@@ -176,6 +179,9 @@ btnTransfer.addEventListener('click', function (e) {
 
         // Update UI
         updateUI(currentAccount);
+
+        // Highlighting the alternate rows
+        highlight();
     }
 });
 
@@ -218,3 +224,10 @@ btnSort.addEventListener('click', function (e) {
     displayMovements(currentAccount.movements, !sorted);
     sorted = !sorted;
 });
+
+// Function to highlight the alternate rows
+const highlight = function () {
+    [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+        if (i % 2 === 0) row.style.backgroundColor = '#f1f1f1';
+    });
+};
