@@ -157,7 +157,7 @@ const startLogOutTimer = function () {
         const min = String(Math.trunc(time / 60)).padStart(2, 0);
         const sec = String(time % 60).padStart(2, 0);
         // In each call, print the remaining time to UI
-        labelTimer.textContent = min;
+        labelTimer.textContent = `${min}:${sec}`;
 
         // When 0 seconds, stop timer and log out user
 
@@ -166,13 +166,12 @@ const startLogOutTimer = function () {
             labelWelcome.textContent = 'Log in to get Started';
             containerApp.style.opacity = 0;
         }
+        // Decrease 1s
+        time--;
     };
 
     // Set time to 5 min
-    let time = 480;
-
-    // Decrease 1s
-    time--;
+    let time = 10;
 
     //Call the timer every second
     tick();
